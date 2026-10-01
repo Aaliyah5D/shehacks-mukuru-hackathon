@@ -1,38 +1,14 @@
-// Client-side REST wrappers. Types mirror the backend.
-export type Country = {
-  id: string;
-  name: string;
-  code: string;
-  flag: string;
-  currency: string;
-  currencyCode: string;
-  currencySymbol: string;
-  supported: boolean;
-  role: "origin" | "destination";
-};
-export type TransferStatus = "SENT" | "IN_TRANSIT" | "READY_TO_COLLECT" | "COLLECTED";
-export const STATUS_FLOW: TransferStatus[] = ["SENT", "IN_TRANSIT", "READY_TO_COLLECT", "COLLECTED"];
-export type Quote = {
-  sendCurrency: string;
-  receiveCurrency: string;
-  amount: number;
-  fee: number;
-  total: number;
-  rate: number;
-  receiveAmount: number;
-};
-export type Transfer = {
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-  status: TransferStatus;
-  sender: { name: string; city: string; countryCode: string };
-  recipient: { name: string; phone: string; city: string; countryCode: string };
-  quote: Quote;
-};
+// Client-side REST wrappers. Types are shared with the backend.
+import type { Country, Quote, Transfer, TransferStatus } from "./types";
+
+export { STATUS_FLOW, USSD_SERVICE_CODE } from "./types";
+export type { Country, Notification, Quote, Transfer, TransferStatus } from "./types";
 
 export class ApiError extends Error {
-  constructor(public code: string, public status: number) {
+  constructor(
+    public code: string,
+    public status: number,
+  ) {
     super(code);
   }
 }
@@ -55,12 +31,14 @@ export const api = {
     ),
   createTransfer: (data: {
     amount: number;
+    rateWindow: number;
     sender: Transfer["sender"];
     recipient: Transfer["recipient"];
   }) =>
-    req<{ transfer: Transfer }>("/api/transfers", { method: "POST", body: JSON.stringify(data) }).then(
-      (r) => r.transfer,
-    ),
+    req<{ transfer: Transfer }>("/api/transfers", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }).then((r) => r.transfer),
   getTransfer: (id: string) =>
     req<{ transfer: Transfer }>(`/api/transfers/${encodeURIComponent(id)}`).then((r) => r.transfer),
   setStatus: (id: string, status: TransferStatus) =>
@@ -68,9 +46,26 @@ export const api = {
       method: "PUT",
       body: JSON.stringify({ status }),
     }).then((r) => r.transfer),
+  /** One USSD request; returns the raw gateway reply ("CON …" or "END …"). */
+  ussd: async (data: { sessionId: string; phoneNumber: string; text: string }) => {
+    const res = await fetch("/api/ussd", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new ApiError("ussd_failed", res.status);
+    return res.text();
+  },
 };
 
-export const countriesQuery = { queryKey: ["countries"], queryFn: api.countries, staleTime: Infinity };
+export const countriesQuery = {
+  queryKey: ["countries"],
+  queryFn: api.countries,
+  staleTime: Infinity,
+};
 
 export const fmt = (n: number, digits = 2) =>
-  new Intl.NumberFormat("en-ZA", { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(n);
+  new Intl.NumberFormat("en-ZA", {
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
+  }).format(n);

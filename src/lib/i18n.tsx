@@ -2,13 +2,18 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 import en from "@/locales/en";
 import sn from "@/locales/sn";
 
-export const LANGUAGES = { en: { label: "English", dict: en }, sn: { label: "Shona", dict: sn } } as const;
+export const LANGUAGES = {
+  en: { label: "English", dict: en },
+  sn: { label: "Shona", dict: sn },
+} as const;
 export type Lang = keyof typeof LANGUAGES;
 export type TKey = keyof typeof en;
 
-const Ctx = createContext<{ lang: Lang; setLang: (l: Lang) => void; t: (k: TKey, vars?: Record<string, string | number>) => string }>(
-  null as never,
-);
+const Ctx = createContext<{
+  lang: Lang;
+  setLang: (l: Lang) => void;
+  t: (k: TKey, vars?: Record<string, string | number>) => string;
+}>(null as never);
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("en");

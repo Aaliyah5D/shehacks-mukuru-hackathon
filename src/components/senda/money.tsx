@@ -48,7 +48,10 @@ export function CountrySelector({
                 <span className="block text-sm text-muted-foreground">{c.currencyCode}</span>
               </span>
               {selected && (
-                <span className="grid h-7 w-7 place-items-center rounded-full bg-primary text-sm text-primary-foreground" aria-hidden>
+                <span
+                  className="grid h-7 w-7 place-items-center rounded-full bg-primary text-sm text-primary-foreground"
+                  aria-hidden
+                >
                   ✓
                 </span>
               )}
@@ -101,8 +104,17 @@ export function AmountInput({
 function Row({ label, value, strong }: { label: string; value: string; strong?: boolean }) {
   return (
     <div className="flex items-baseline justify-between gap-4 py-2.5">
-      <dt className={cn("text-base", strong ? "font-semibold" : "text-muted-foreground")}>{label}</dt>
-      <dd className={cn("tabular text-right", strong ? "text-xl font-extrabold" : "text-lg font-semibold")}>{value}</dd>
+      <dt className={cn("text-base", strong ? "font-semibold" : "text-muted-foreground")}>
+        {label}
+      </dt>
+      <dd
+        className={cn(
+          "tabular text-right",
+          strong ? "text-xl font-extrabold" : "text-lg font-semibold",
+        )}
+      >
+        {value}
+      </dd>
     </div>
   );
 }
@@ -114,7 +126,10 @@ export function FeeBreakdown({ quote, country }: { quote: Quote; country: Countr
       <dl className="divide-y divide-border">
         <Row label={t("youSend")} value={`R ${fmt(quote.amount)}`} />
         <Row label={t("fee")} value={`+ R ${fmt(quote.fee)}`} />
-        <Row label={t("rate")} value={`1 ZAR = ${fmt(quote.rate, quote.rate < 10 ? 2 : 1)} ${quote.receiveCurrency}`} />
+        <Row
+          label={t("rate")}
+          value={`1 ZAR = ${fmt(quote.rate, quote.rate < 10 ? 2 : 1)} ${quote.receiveCurrency}`}
+        />
         <Row label={t("totalCost")} value={`R ${fmt(quote.total)}`} strong />
       </dl>
       <div className="mt-3 rounded-2xl bg-success-soft p-4">
@@ -127,9 +142,15 @@ export function FeeBreakdown({ quote, country }: { quote: Quote; country: Countr
         </p>
       </div>
       <p className="mt-3 text-center text-sm font-semibold text-success">✓ {t("noHidden")}</p>
+      <p className="mt-1 text-center text-sm text-muted-foreground">
+        {t("rateHeld", { time: clockTime(quote.rateValidUntil) })}
+      </p>
     </Card>
   );
 }
+
+const clockTime = (iso: string) =>
+  new Date(iso).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
 const STATUS_KEY = {
   SENT: "status_SENT",
@@ -150,7 +171,11 @@ export function StatusTracker({ status }: { status: Transfer["status"] }) {
   const finished = status === "COLLECTED";
   return (
     <div>
-      <p role="status" aria-live="polite" className="mb-5 rounded-2xl bg-success-soft p-4 text-lg font-semibold">
+      <p
+        role="status"
+        aria-live="polite"
+        className="mb-5 rounded-2xl bg-success-soft p-4 text-lg font-semibold"
+      >
         {t(MSG_KEY[status])}
       </p>
       <ol className="space-y-0">
@@ -164,7 +189,8 @@ export function StatusTracker({ status }: { status: Transfer["status"] }) {
                   className={cn(
                     "grid h-10 w-10 shrink-0 place-items-center rounded-full border-2 text-lg font-bold",
                     done && "border-success bg-success text-success-foreground",
-                    current && "border-accent bg-accent text-accent-foreground ring-4 ring-accent-soft",
+                    current &&
+                      "border-accent bg-accent text-accent-foreground ring-4 ring-accent-soft",
                     !done && !current && "border-input bg-card text-muted-foreground",
                   )}
                   aria-hidden
@@ -172,11 +198,19 @@ export function StatusTracker({ status }: { status: Transfer["status"] }) {
                   {done ? "✓" : current ? "●" : "○"}
                 </span>
                 {i < STATUS_FLOW.length - 1 && (
-                  <span className={cn("my-1 w-0.5 flex-1 min-h-6", i < idx ? "bg-success" : "bg-border")} aria-hidden />
+                  <span
+                    className={cn(
+                      "my-1 w-0.5 flex-1 min-h-6",
+                      i < idx ? "bg-success" : "bg-border",
+                    )}
+                    aria-hidden
+                  />
                 )}
               </div>
               <div className="pb-6 pt-1.5">
-                <p className={cn("text-lg font-bold", !done && !current && "text-muted-foreground")}>
+                <p
+                  className={cn("text-lg font-bold", !done && !current && "text-muted-foreground")}
+                >
                   {i + 1}. {t(STATUS_KEY[s])}
                 </p>
                 <p className="text-sm text-muted-foreground">
@@ -190,6 +224,39 @@ export function StatusTracker({ status }: { status: Transfer["status"] }) {
     </div>
   );
 }
+
+/** The (mock) SMS messages the recipient has been sent, newest first. */
+export function RecipientMessages({ transfer }: { transfer: Transfer }) {
+  const { t } = useI18n();
+  if (!transfer.notifications.length) return null;
+  const vars = {
+    sender: transfer.sender.name,
+    name: transfer.recipient.name,
+    amount: fmt(transfer.quote.receiveAmount),
+    cur: transfer.quote.receiveCurrency,
+    id: transfer.id,
+  };
+  return (
+    <Card>
+      <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+        {t("smsTitle")}
+      </h2>
+      <ul className="space-y-3">
+        {[...transfer.notifications].reverse().map((n) => (
+          <li key={n.kind}>
+            <p className="mb-1 text-xs text-muted-foreground">
+              {t("smsTo", { to: n.to })} · {clockTime(n.at)}
+            </p>
+            <p className="rounded-2xl rounded-tl-sm bg-secondary px-4 py-3">
+              {t(SMS_KEY[n.kind], vars)}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </Card>
+  );
+}
+const SMS_KEY = { SENT: "sms_SENT", READY_TO_COLLECT: "sms_READY_TO_COLLECT" } as const;
 
 export function statusLabelKey(s: Transfer["status"]) {
   return STATUS_KEY[s];

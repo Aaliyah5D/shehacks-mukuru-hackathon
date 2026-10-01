@@ -14,8 +14,10 @@ import { Route as AmountRouteImport } from './routes/amount'
 import { Route as RecipientRouteImport } from './routes/recipient'
 import { Route as ReviewRouteImport } from './routes/review'
 import { Route as SendRouteImport } from './routes/send'
+import { Route as UssdRouteImport } from './routes/ussd'
 import { Route as ApiCountriesRouteImport } from './routes/api/countries'
 import { Route as ApiTransfersRouteImport } from './routes/api/transfers'
+import { Route as ApiUssdRouteImport } from './routes/api/ussd'
 import { Route as SuccessIdRouteImport } from './routes/success.$id'
 import { Route as TrackIndexRouteImport } from './routes/track.index'
 import { Route as TrackIdRouteImport } from './routes/track.$id'
@@ -48,6 +50,11 @@ const SendRoute = SendRouteImport.update({
   path: '/send',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UssdRoute = UssdRouteImport.update({
+  id: '/ussd',
+  path: '/ussd',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiCountriesRoute = ApiCountriesRouteImport.update({
   id: '/api/countries',
   path: '/api/countries',
@@ -56,6 +63,11 @@ const ApiCountriesRoute = ApiCountriesRouteImport.update({
 const ApiTransfersRoute = ApiTransfersRouteImport.update({
   id: '/api/transfers',
   path: '/api/transfers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiUssdRoute = ApiUssdRouteImport.update({
+  id: '/api/ussd',
+  path: '/api/ussd',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SuccessIdRoute = SuccessIdRouteImport.update({
@@ -96,8 +108,10 @@ export interface FileRoutesByFullPath {
   '/recipient': typeof RecipientRoute
   '/review': typeof ReviewRoute
   '/send': typeof SendRoute
+  '/ussd': typeof UssdRoute
   '/api/countries': typeof ApiCountriesRoute
   '/api/transfers': typeof ApiTransfersRouteWithChildren
+  '/api/ussd': typeof ApiUssdRoute
   '/success/$id': typeof SuccessIdRoute
   '/track/$id': typeof TrackIdRoute
   '/track/': typeof TrackIndexRoute
@@ -111,8 +125,10 @@ export interface FileRoutesByTo {
   '/recipient': typeof RecipientRoute
   '/review': typeof ReviewRoute
   '/send': typeof SendRoute
+  '/ussd': typeof UssdRoute
   '/api/countries': typeof ApiCountriesRoute
   '/api/transfers': typeof ApiTransfersRouteWithChildren
+  '/api/ussd': typeof ApiUssdRoute
   '/success/$id': typeof SuccessIdRoute
   '/track/$id': typeof TrackIdRoute
   '/track': typeof TrackIndexRoute
@@ -127,8 +143,10 @@ export interface FileRoutesById {
   '/recipient': typeof RecipientRoute
   '/review': typeof ReviewRoute
   '/send': typeof SendRoute
+  '/ussd': typeof UssdRoute
   '/api/countries': typeof ApiCountriesRoute
   '/api/transfers': typeof ApiTransfersRouteWithChildren
+  '/api/ussd': typeof ApiUssdRoute
   '/success/$id': typeof SuccessIdRoute
   '/track/$id': typeof TrackIdRoute
   '/track/': typeof TrackIndexRoute
@@ -144,8 +162,10 @@ export interface FileRouteTypes {
     | '/recipient'
     | '/review'
     | '/send'
+    | '/ussd'
     | '/api/countries'
     | '/api/transfers'
+    | '/api/ussd'
     | '/success/$id'
     | '/track/$id'
     | '/track/'
@@ -159,8 +179,10 @@ export interface FileRouteTypes {
     | '/recipient'
     | '/review'
     | '/send'
+    | '/ussd'
     | '/api/countries'
     | '/api/transfers'
+    | '/api/ussd'
     | '/success/$id'
     | '/track/$id'
     | '/track'
@@ -174,8 +196,10 @@ export interface FileRouteTypes {
     | '/recipient'
     | '/review'
     | '/send'
+    | '/ussd'
     | '/api/countries'
     | '/api/transfers'
+    | '/api/ussd'
     | '/success/$id'
     | '/track/$id'
     | '/track/'
@@ -190,8 +214,10 @@ export interface RootRouteChildren {
   RecipientRoute: typeof RecipientRoute
   ReviewRoute: typeof ReviewRoute
   SendRoute: typeof SendRoute
+  UssdRoute: typeof UssdRoute
   ApiCountriesRoute: typeof ApiCountriesRoute
   ApiTransfersRoute: typeof ApiTransfersRouteWithChildren
+  ApiUssdRoute: typeof ApiUssdRoute
   SuccessIdRoute: typeof SuccessIdRoute
   TrackIdRoute: typeof TrackIdRoute
   TrackIndexRoute: typeof TrackIndexRoute
@@ -235,6 +261,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SendRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ussd': {
+      id: '/ussd'
+      path: '/ussd'
+      fullPath: '/ussd'
+      preLoaderRoute: typeof UssdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/countries': {
       id: '/api/countries'
       path: '/api/countries'
@@ -247,6 +280,13 @@ declare module '@tanstack/react-router' {
       path: '/api/transfers'
       fullPath: '/api/transfers'
       preLoaderRoute: typeof ApiTransfersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/ussd': {
+      id: '/api/ussd'
+      path: '/api/ussd'
+      fullPath: '/api/ussd'
+      preLoaderRoute: typeof ApiUssdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/success/$id': {
@@ -324,8 +364,10 @@ const rootRouteChildren: RootRouteChildren = {
   RecipientRoute: RecipientRoute,
   ReviewRoute: ReviewRoute,
   SendRoute: SendRoute,
+  UssdRoute: UssdRoute,
   ApiCountriesRoute: ApiCountriesRoute,
   ApiTransfersRoute: ApiTransfersRouteWithChildren,
+  ApiUssdRoute: ApiUssdRoute,
   SuccessIdRoute: SuccessIdRoute,
   TrackIdRoute: TrackIdRoute,
   TrackIndexRoute: TrackIndexRoute,
