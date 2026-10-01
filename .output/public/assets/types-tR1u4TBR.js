@@ -1,0 +1,1 @@
+var e=[`SENT`,`IN_TRANSIT`,`READY_TO_COLLECT`,`COLLECTED`],t=`*120*7362#`;export{t as n,e as t};

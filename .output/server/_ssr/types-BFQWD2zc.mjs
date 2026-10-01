@@ -1,0 +1,11 @@
+//#region node_modules/.nitro/vite/services/ssr/assets/types-BFQWD2zc.js
+var STATUS_FLOW = [
+	"SENT",
+	"IN_TRANSIT",
+	"READY_TO_COLLECT",
+	"COLLECTED"
+];
+/** Shortcode customers dial to reach the USSD menu (see ussd.server.ts). */
+var USSD_SERVICE_CODE = "*120*7362#";
+//#endregion
+export { USSD_SERVICE_CODE as n, STATUS_FLOW as t };

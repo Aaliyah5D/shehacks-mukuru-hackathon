@@ -1,0 +1,56 @@
+//#region node_modules/.nitro/vite/services/ssr/assets/api-_cZDKRL1.js
+var ApiError = class extends Error {
+	code;
+	status;
+	constructor(code, status) {
+		super(code);
+		this.code = code;
+		this.status = status;
+	}
+};
+async function req(path, init) {
+	const res = await fetch(path, {
+		...init,
+		headers: {
+			"Content-Type": "application/json",
+			...init?.headers ?? {}
+		}
+	});
+	const body = await res.json().catch(() => ({}));
+	if (!res.ok) throw new ApiError(body.error ?? "unknown", res.status);
+	return body;
+}
+var api = {
+	countries: () => req("/api/countries").then((r) => r.countries),
+	rate: (currency, amount) => req(`/api/exchange-rates/${currency}${amount ? `?amount=${amount}` : ""}`),
+	createTransfer: (data) => req("/api/transfers", {
+		method: "POST",
+		body: JSON.stringify(data)
+	}).then((r) => r.transfer),
+	getTransfer: (id) => req(`/api/transfers/${encodeURIComponent(id)}`).then((r) => r.transfer),
+	setStatus: (id, status) => req(`/api/transfers/${encodeURIComponent(id)}/status`, {
+		method: "PUT",
+		body: JSON.stringify({ status })
+	}).then((r) => r.transfer),
+	/** One USSD request; returns the raw gateway reply ("CON …" or "END …"). */
+	ussd: async (data) => {
+		const res = await fetch("/api/ussd", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(data)
+		});
+		if (!res.ok) throw new ApiError("ussd_failed", res.status);
+		return res.text();
+	}
+};
+var countriesQuery = {
+	queryKey: ["countries"],
+	queryFn: api.countries,
+	staleTime: Infinity
+};
+var fmt = (n, digits = 2) => new Intl.NumberFormat("en-ZA", {
+	minimumFractionDigits: digits,
+	maximumFractionDigits: digits
+}).format(n);
+//#endregion
+export { fmt as i, api as n, countriesQuery as r, ApiError as t };

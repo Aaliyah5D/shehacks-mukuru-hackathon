@@ -1,0 +1,849 @@
+import { n as __toESM } from "../_runtime.mjs";
+import { a as require_jsx_runtime, o as require_react, r as QueryClientProvider } from "../_libs/react+tanstack__react-query.mjs";
+import { _ as createFileRoute, d as Scripts, f as HeadContent, g as lazyRouteComponent, h as Outlet, m as createRouter, v as createRootRouteWithContext, x as useRouter, y as Link } from "../_libs/@tanstack/react-router+[...].mjs";
+import { a as I18nProvider, o as LanguageSelector, s as Logo } from "./ui-DCNPigep.mjs";
+import { t as FlowProvider } from "./flow-CPEaVGgt.mjs";
+import { t as QueryClient } from "../_libs/tanstack__query-core.mjs";
+import { n as USSD_SERVICE_CODE, t as STATUS_FLOW } from "./types-BFQWD2zc.mjs";
+import { t as Route$14 } from "./success._id-D5M3pkUa.mjs";
+import { t as Route$15 } from "./track._id-BT7F3Q58.mjs";
+import { i as stringType, n as numberType, r as objectType, t as enumType } from "../_libs/zod.mjs";
+//#region node_modules/.nitro/vite/services/ssr/assets/router-DGmgf9x-.js
+var import_react = /* @__PURE__ */ __toESM(require_react());
+var import_jsx_runtime = require_jsx_runtime();
+var styles_default = "/assets/styles-BPJc0yJW.css";
+function reportLovableError(error, context = {}) {
+	if (typeof window === "undefined") return;
+	window.__lovableEvents?.captureException?.(error, {
+		source: "react_error_boundary",
+		route: window.location.pathname,
+		...context
+	}, {
+		mechanism: "react_error_boundary",
+		handled: false,
+		severity: "error"
+	});
+	const message = error instanceof Response ? `Response ${error.status}${error.url ? ` at ${error.url}` : ""}` : error instanceof Error ? error.message : String(error);
+	const stack = error instanceof Error ? error.stack : void 0;
+	window.__lovableReportRuntimeError?.({
+		message,
+		...stack !== void 0 && { stack },
+		filename: window.location.pathname
+	});
+}
+function NotFoundComponent() {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: "flex min-h-screen items-center justify-center bg-background px-4",
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: "max-w-md text-center",
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
+					className: "text-7xl font-bold text-foreground",
+					children: "404"
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
+					className: "mt-4 text-xl font-semibold text-foreground",
+					children: "Page not found"
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+					className: "mt-2 text-sm text-muted-foreground",
+					children: "This page doesn't exist."
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "mt-6",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+						to: "/",
+						className: "inline-flex min-h-12 items-center rounded-2xl bg-primary px-6 font-semibold text-primary-foreground",
+						children: "Go home"
+					})
+				})
+			]
+		})
+	});
+}
+function ErrorComponent({ error, reset }) {
+	console.error(error);
+	const router = useRouter();
+	(0, import_react.useEffect)(() => {
+		reportLovableError(error, { boundary: "tanstack_root_error_component" });
+	}, [error]);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: "flex min-h-screen items-center justify-center bg-background px-4",
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: "max-w-md text-center",
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
+				className: "text-xl font-semibold text-foreground",
+				children: "Something went wrong. Please try again."
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: "mt-6 flex justify-center gap-2",
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+					onClick: () => {
+						router.invalidate();
+						reset();
+					},
+					className: "min-h-12 rounded-2xl bg-primary px-6 font-semibold text-primary-foreground",
+					children: "Try again"
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+					href: "/",
+					className: "inline-flex min-h-12 items-center rounded-2xl border-2 border-primary px-6 font-semibold",
+					children: "Go home"
+				})]
+			})]
+		})
+	});
+}
+var Route$13 = createRootRouteWithContext()({
+	head: () => ({
+		meta: [
+			{ charSet: "utf-8" },
+			{
+				name: "viewport",
+				content: "width=device-width, initial-scale=1"
+			},
+			{
+				name: "theme-color",
+				content: "#FFF9F5"
+			},
+			{ title: "Senda — Send money home. Simply." },
+			{
+				name: "description",
+				content: "Clear fees, simple transfers from South Africa to family across Africa."
+			},
+			{
+				property: "og:type",
+				content: "website"
+			},
+			{
+				name: "twitter:card",
+				content: "summary_large_image"
+			}
+		],
+		links: [
+			{
+				rel: "stylesheet",
+				href: styles_default
+			},
+			{
+				rel: "icon",
+				href: "/favicon.ico",
+				type: "image/x-icon"
+			},
+			{
+				rel: "preconnect",
+				href: "https://fonts.googleapis.com"
+			},
+			{
+				rel: "preconnect",
+				href: "https://fonts.gstatic.com",
+				crossOrigin: "anonymous"
+			},
+			{
+				rel: "stylesheet",
+				href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+			}
+		]
+	}),
+	shellComponent: RootShell,
+	component: RootComponent,
+	notFoundComponent: NotFoundComponent,
+	errorComponent: ErrorComponent
+});
+function RootShell({ children }) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("html", {
+		lang: "en",
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("head", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(HeadContent, {}) }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("body", { children: [children, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Scripts, {})] })]
+	});
+}
+function RootComponent() {
+	const { queryClient } = Route$13.useRouteContext();
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(QueryClientProvider, {
+		client: queryClient,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(I18nProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FlowProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: "mx-auto flex min-h-screen w-full max-w-lg flex-col px-5 pb-10",
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("header", {
+				className: "flex items-center justify-between py-4",
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Logo, {}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LanguageSelector, {})]
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("main", {
+				className: "flex-1",
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Outlet, {})
+			})]
+		}) }) })
+	});
+}
+var $$splitComponentImporter$6 = () => import("./routes-Ltwy9ELV.mjs");
+var Route$12 = createFileRoute("/")({
+	head: () => ({ meta: [
+		{ title: "Senda — Send money home. Simply." },
+		{
+			name: "description",
+			content: "Know exactly what you pay and exactly what your family receives."
+		},
+		{
+			property: "og:title",
+			content: "Senda — Send money home. Simply."
+		},
+		{
+			property: "og:description",
+			content: "Clear fees. Simple transfers. Peace of mind."
+		}
+	] }),
+	component: lazyRouteComponent($$splitComponentImporter$6, "component")
+});
+var $$splitComponentImporter$5 = () => import("./amount-1EAvc8P2.mjs");
+var Route$11 = createFileRoute("/amount")({
+	head: () => ({ meta: [
+		{ title: "Enter amount — Senda" },
+		{
+			name: "description",
+			content: "See the fee, rate and exactly what your recipient gets."
+		},
+		{
+			property: "og:title",
+			content: "Enter amount — Senda"
+		},
+		{
+			property: "og:description",
+			content: "Transparent fees before you send."
+		}
+	] }),
+	component: lazyRouteComponent($$splitComponentImporter$5, "component")
+});
+var $$splitComponentImporter$4 = () => import("./recipient-BnrMF18P.mjs");
+var Route$10 = createFileRoute("/recipient")({
+	head: () => ({ meta: [
+		{ title: "Recipient details — Senda" },
+		{
+			name: "description",
+			content: "Tell us who is receiving the money."
+		},
+		{
+			property: "og:title",
+			content: "Recipient details — Senda"
+		},
+		{
+			property: "og:description",
+			content: "A short, simple recipient form."
+		}
+	] }),
+	component: lazyRouteComponent($$splitComponentImporter$4, "component")
+});
+var $$splitComponentImporter$3 = () => import("./review-b2VwFewv.mjs");
+var Route$9 = createFileRoute("/review")({
+	head: () => ({ meta: [
+		{ title: "Review transfer — Senda" },
+		{
+			name: "description",
+			content: "Check every cost before you send."
+		},
+		{
+			property: "og:title",
+			content: "Review transfer — Senda"
+		},
+		{
+			property: "og:description",
+			content: "No hidden fees. Ever."
+		}
+	] }),
+	component: lazyRouteComponent($$splitComponentImporter$3, "component")
+});
+var $$splitComponentImporter$2 = () => import("./send-DcgoOX0y.mjs");
+var Route$8 = createFileRoute("/send")({
+	head: () => ({ meta: [
+		{ title: "Choose destination — Senda" },
+		{
+			name: "description",
+			content: "Pick where you're sending money from and to."
+		},
+		{
+			property: "og:title",
+			content: "Choose destination — Senda"
+		},
+		{
+			property: "og:description",
+			content: "Send from South Africa to 9 African countries."
+		}
+	] }),
+	component: lazyRouteComponent($$splitComponentImporter$2, "component")
+});
+var $$splitComponentImporter$1 = () => import("./ussd-BP7Aj96C.mjs");
+var Route$7 = createFileRoute("/ussd")({
+	head: () => ({ meta: [
+		{ title: "Send with USSD — Senda" },
+		{
+			name: "description",
+			content: `No smartphone or data? Dial ${USSD_SERVICE_CODE} to send money home.`
+		},
+		{
+			property: "og:title",
+			content: "Send with USSD — Senda"
+		},
+		{
+			property: "og:description",
+			content: "Send money home from any phone, with no data."
+		}
+	] }),
+	component: lazyRouteComponent($$splitComponentImporter$1, "component")
+});
+var COUNTRIES = [
+	{
+		id: "za",
+		name: "South Africa",
+		code: "ZA",
+		flag: "🇿🇦",
+		currency: "South African Rand",
+		currencyCode: "ZAR",
+		currencySymbol: "R",
+		supported: true,
+		role: "origin"
+	},
+	{
+		id: "zw",
+		name: "Zimbabwe",
+		code: "ZW",
+		flag: "🇿🇼",
+		currency: "Zimbabwe Gold",
+		currencyCode: "ZWG",
+		currencySymbol: "ZiG",
+		supported: true,
+		role: "destination"
+	},
+	{
+		id: "mz",
+		name: "Mozambique",
+		code: "MZ",
+		flag: "🇲🇿",
+		currency: "Mozambican Metical",
+		currencyCode: "MZN",
+		currencySymbol: "MT",
+		supported: true,
+		role: "destination"
+	},
+	{
+		id: "ls",
+		name: "Lesotho",
+		code: "LS",
+		flag: "🇱🇸",
+		currency: "Lesotho Loti",
+		currencyCode: "LSL",
+		currencySymbol: "L",
+		supported: true,
+		role: "destination"
+	},
+	{
+		id: "sz",
+		name: "Eswatini",
+		code: "SZ",
+		flag: "🇸🇿",
+		currency: "Swazi Lilangeni",
+		currencyCode: "SZL",
+		currencySymbol: "E",
+		supported: true,
+		role: "destination"
+	},
+	{
+		id: "bw",
+		name: "Botswana",
+		code: "BW",
+		flag: "🇧🇼",
+		currency: "Botswana Pula",
+		currencyCode: "BWP",
+		currencySymbol: "P",
+		supported: true,
+		role: "destination"
+	},
+	{
+		id: "zm",
+		name: "Zambia",
+		code: "ZM",
+		flag: "🇿🇲",
+		currency: "Zambian Kwacha",
+		currencyCode: "ZMW",
+		currencySymbol: "K",
+		supported: true,
+		role: "destination"
+	},
+	{
+		id: "mw",
+		name: "Malawi",
+		code: "MW",
+		flag: "🇲🇼",
+		currency: "Malawian Kwacha",
+		currencyCode: "MWK",
+		currencySymbol: "MK",
+		supported: true,
+		role: "destination"
+	},
+	{
+		id: "gh",
+		name: "Ghana",
+		code: "GH",
+		flag: "🇬🇭",
+		currency: "Ghanaian Cedi",
+		currencyCode: "GHS",
+		currencySymbol: "₵",
+		supported: true,
+		role: "destination"
+	},
+	{
+		id: "ng",
+		name: "Nigeria",
+		code: "NG",
+		flag: "🇳🇬",
+		currency: "Nigerian Naira",
+		currencyCode: "NGN",
+		currencySymbol: "₦",
+		supported: true,
+		role: "destination"
+	}
+];
+var listCountries = () => COUNTRIES.filter((c) => c.supported);
+var getCountry = (code) => COUNTRIES.find((c) => c.code === code.toUpperCase() && c.supported);
+var BASE_RATES = {
+	ZAR: 1,
+	ZWG: 1.48,
+	MZN: 3.52,
+	LSL: 1,
+	SZL: 1,
+	BWP: .74,
+	ZMW: 1.46,
+	MWK: 95.3,
+	GHS: .84,
+	NGN: 86.7
+};
+var PEGGED = /* @__PURE__ */ new Set([
+	"ZAR",
+	"LSL",
+	"SZL"
+]);
+var RATE_WINDOW_MS = 18e4;
+var currentRateWindow = (now = Date.now()) => Math.floor(now / RATE_WINDOW_MS);
+var rateValidUntil = (window) => (/* @__PURE__ */ new Date((window + 2) * RATE_WINDOW_MS)).toISOString();
+var isRateWindowValid = (window, now = Date.now()) => {
+	const current = currentRateWindow(now);
+	return window === current || window === current - 1;
+};
+function drift(currency, window) {
+	let h = 2166136261;
+	for (const ch of `${currency}:${window}`) h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
+	h = Math.imul(h ^ h >>> 16, 2246822507);
+	h = Math.imul(h ^ h >>> 13, 3266489909);
+	h ^= h >>> 16;
+	return ((h >>> 0) / 4294967295 - .5) * .03;
+}
+function getRate(currencyCode, window = currentRateWindow()) {
+	const code = currencyCode.toUpperCase();
+	const base = BASE_RATES[code];
+	if (!base) return void 0;
+	if (PEGGED.has(code)) return base;
+	return Number((base * (1 + drift(code, window))).toPrecision(4));
+}
+var FEE_CONFIG = {
+	flat: 15,
+	percent: .02,
+	min: 20
+};
+var calculateFee = (amount) => round2(Math.max(FEE_CONFIG.min, FEE_CONFIG.flat + amount * FEE_CONFIG.percent));
+var round2 = (n) => Math.round(n * 100) / 100;
+var MAX_AMOUNT = 5e3;
+function buildQuote(amount, receiveCurrency, window = currentRateWindow()) {
+	const rate = getRate(receiveCurrency, window);
+	if (!rate || !Number.isFinite(amount) || amount < 50 || amount > 5e3) return null;
+	const fee = calculateFee(amount);
+	return {
+		sendCurrency: "ZAR",
+		receiveCurrency: receiveCurrency.toUpperCase(),
+		amount: round2(amount),
+		fee,
+		total: round2(amount + fee),
+		rate,
+		receiveAmount: round2(amount * rate),
+		rateWindow: window,
+		rateValidUntil: rateValidUntil(window)
+	};
+}
+function canTransition(from, to) {
+	return STATUS_FLOW.indexOf(to) === STATUS_FLOW.indexOf(from) + 1;
+}
+var g$1 = globalThis;
+var store = g$1.__sendaTransfers ??= /* @__PURE__ */ new Map();
+function newId() {
+	const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+	let id = "";
+	for (let i = 0; i < 6; i++) id += chars[Math.floor(Math.random() * 32)];
+	return `SND-${id}`;
+}
+var digits = (phone) => phone.replace(/\D/g, "");
+function createTransfer(input) {
+	const dest = getCountry(input.recipient.countryCode);
+	if (!dest || dest.role !== "destination") return { error: "unsupported_country" };
+	const window = input.rateWindow ?? currentRateWindow();
+	if (!isRateWindowValid(window)) return { error: "quote_expired" };
+	const quote = buildQuote(input.amount, dest.currencyCode, window);
+	if (!quote) return { error: "invalid_amount" };
+	const now = (/* @__PURE__ */ new Date()).toISOString();
+	let id = newId();
+	while (store.has(id)) id = newId();
+	const t = {
+		id,
+		createdAt: now,
+		updatedAt: now,
+		status: "SENT",
+		sender: input.sender,
+		recipient: input.recipient,
+		quote,
+		notifications: [{
+			kind: "SENT",
+			to: input.recipient.phone,
+			at: now
+		}]
+	};
+	store.set(id, t);
+	return t;
+}
+var getTransfer = (id) => store.get(id.toUpperCase().trim());
+var listTransfersBySender = (phone) => [...store.values()].filter((t) => t.sender.phone && digits(t.sender.phone) === digits(phone)).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+function updateStatus(id, to) {
+	const t = getTransfer(id);
+	if (!t) return { error: "not_found" };
+	if (!canTransition(t.status, to)) return { error: "invalid_transition" };
+	t.status = to;
+	t.updatedAt = (/* @__PURE__ */ new Date()).toISOString();
+	if (to === "READY_TO_COLLECT") t.notifications.push({
+		kind: to,
+		to: t.recipient.phone,
+		at: t.updatedAt
+	});
+	return t;
+}
+var Route$6 = createFileRoute("/api/countries")({ server: { handlers: { GET: async () => Response.json({ countries: listCountries() }) } } });
+var schema$2 = objectType({
+	amount: numberType().positive(),
+	rateWindow: numberType().int().optional(),
+	sender: objectType({
+		name: stringType().trim().min(1).max(100),
+		city: stringType().trim().min(1).max(100),
+		countryCode: stringType().length(2)
+	}),
+	recipient: objectType({
+		name: stringType().trim().min(1).max(100),
+		phone: stringType().trim().min(6).max(20),
+		city: stringType().trim().min(1).max(100),
+		countryCode: stringType().length(2)
+	})
+});
+var Route$5 = createFileRoute("/api/transfers")({ server: { handlers: { POST: async ({ request }) => {
+	const parsed = schema$2.safeParse(await request.json().catch(() => null));
+	if (!parsed.success) return Response.json({ error: "invalid_input" }, { status: 400 });
+	const result = createTransfer(parsed.data);
+	if ("error" in result) return Response.json(result, { status: result.error === "quote_expired" ? 409 : 400 });
+	return Response.json({ transfer: result }, { status: 201 });
+} } } });
+var STRINGS = {
+	en: {
+		menu: "Senda\n1. Send money\n2. My transfers\n3. Shona\n0. Exit",
+		sendTo: "Send to:",
+		amount: "Amount in Rand (R{min}-R{max}):",
+		phone: "Recipient phone number:",
+		name: "Recipient full name:",
+		city: "Recipient city:",
+		confirm: "Send R{amount}\nFee R{fee}\nTotal R{total}\n{name} gets {receive} {cur}\n1. Confirm\n2. Cancel",
+		sent: "Sent! Ref {id}\n{name} will get an SMS when it is ready to collect.",
+		cancelled: "Cancelled. Nothing was sent.",
+		bye: "Thank you for using Senda.",
+		invalid: "Invalid choice. Please dial again.",
+		badAmount: "Amount must be R{min}-R{max}. Please dial again.",
+		badPhone: "Invalid phone number. Please dial again.",
+		expired: "The rate changed. Nothing was sent. Please dial again.",
+		failed: "Service unavailable. Please try again later.",
+		none: "You have not sent any money yet.",
+		mine: "Your transfers:",
+		status: {
+			SENT: "Sent",
+			IN_TRANSIT: "In transit",
+			READY_TO_COLLECT: "Ready",
+			COLLECTED: "Collected"
+		}
+	},
+	sn: {
+		menu: "Senda\n1. Tumira mari\n2. Mari yandatumira\n0. Buda",
+		sendTo: "Tumira ku:",
+		amount: "Mari muRand (R{min}-R{max}):",
+		phone: "Nhamba yerunhare yemugamuchiri:",
+		name: "Zita rizere remugamuchiri:",
+		city: "Guta remugamuchiri:",
+		confirm: "Tumira R{amount}\nMari yekutumira R{fee}\nZvese R{total}\n{name} anogamuchira {receive} {cur}\n1. Bvuma\n2. Kanzura",
+		sent: "Yatumirwa! Nhamba {id}\n{name} achagamuchira SMS kana yagadzirira kutorwa.",
+		cancelled: "Zvakanzurwa. Hapana chatumirwa.",
+		bye: "Tatenda nekushandisa Senda.",
+		invalid: "Sarudzo isiri iyo. Ridza zvakare.",
+		badAmount: "Mari inofanira kuva R{min}-R{max}. Ridza zvakare.",
+		badPhone: "Nhamba isiri iyo. Ridza zvakare.",
+		expired: "Mwero wachinja. Hapana chatumirwa. Ridza zvakare.",
+		failed: "Sevhisi haisi kushanda. Edza zvakare gare gare.",
+		none: "Hauna mari yawakatumira.",
+		mine: "Mari yawakatumira:",
+		status: {
+			SENT: "Yatumirwa",
+			IN_TRANSIT: "Iri munzira",
+			READY_TO_COLLECT: "Yagadzirira",
+			COLLECTED: "Yatorwa"
+		}
+	}
+};
+var CUSTOMERS = { "27820000000": {
+	name: "Thandi",
+	city: "Johannesburg"
+} };
+var g = globalThis;
+var confirmWindows = g.__sendaUssdQuotes ??= /* @__PURE__ */ new Map();
+var con = (s) => `CON ${s}`;
+var end = (s) => `END ${s}`;
+var fill = (s, vars) => Object.entries(vars).reduce((acc, [k, v]) => acc.replaceAll(`{${k}}`, String(v)), s);
+var money = (n) => new Intl.NumberFormat("en-ZA", {
+	minimumFractionDigits: 2,
+	maximumFractionDigits: 2
+}).format(n);
+function handleUssd({ sessionId, phoneNumber, text }) {
+	let inputs = text ? text.split("*") : [];
+	let s = STRINGS.en;
+	if (inputs[0] === "3") {
+		s = STRINGS.sn;
+		inputs = inputs.slice(1);
+	}
+	const [choice, ...rest] = inputs;
+	if (choice === void 0) return con(s.menu);
+	if (choice === "1") return sendMoney(rest, s, sessionId, phoneNumber);
+	if (choice === "2") return myTransfers(s, phoneNumber);
+	if (choice === "0") return end(s.bye);
+	return end(s.invalid);
+}
+function sendMoney(inputs, s, sessionId, phoneNumber) {
+	const dests = listCountries().filter((c) => c.role === "destination");
+	const [countryChoice, amountText, phone, name, city, confirm] = inputs.map((v) => v.trim());
+	if (countryChoice === void 0) return con([s.sendTo, ...dests.map((c, i) => `${i + 1}. ${c.name}`)].join("\n"));
+	const dest = dests[Number(countryChoice) - 1];
+	if (!dest) return end(s.invalid);
+	const limits = {
+		min: 50,
+		max: MAX_AMOUNT
+	};
+	if (amountText === void 0) return con(fill(s.amount, limits));
+	const amount = Number(amountText);
+	if (!Number.isFinite(amount) || amount < 50 || amount > 5e3) return end(fill(s.badAmount, limits));
+	if (phone === void 0) return con(s.phone);
+	if (phone.replace(/\D/g, "").length < 7) return end(s.badPhone);
+	if (name === void 0) return con(s.name);
+	if (!name) return end(s.invalid);
+	if (city === void 0) return con(s.city);
+	if (!city) return end(s.invalid);
+	if (confirm === void 0) {
+		const window = currentRateWindow();
+		const quote = buildQuote(amount, dest.currencyCode, window);
+		if (!quote) return end(s.failed);
+		confirmWindows.set(sessionId, window);
+		return con(fill(s.confirm, {
+			amount: money(quote.amount),
+			fee: money(quote.fee),
+			total: money(quote.total),
+			name,
+			receive: money(quote.receiveAmount),
+			cur: quote.receiveCurrency
+		}));
+	}
+	const rateWindow = confirmWindows.get(sessionId);
+	confirmWindows.delete(sessionId);
+	if (confirm !== "1") return end(s.cancelled);
+	const result = createTransfer({
+		amount,
+		rateWindow,
+		sender: {
+			...CUSTOMERS[phoneNumber.replace(/\D/g, "")] ?? {
+				name: phoneNumber,
+				city: "—"
+			},
+			countryCode: "ZA",
+			phone: phoneNumber
+		},
+		recipient: {
+			name,
+			phone,
+			city,
+			countryCode: dest.code
+		}
+	});
+	if ("error" in result) return end(result.error === "quote_expired" ? s.expired : s.failed);
+	return end(fill(s.sent, {
+		id: result.id,
+		name
+	}));
+}
+function myTransfers(s, phoneNumber) {
+	const recent = listTransfersBySender(phoneNumber).slice(0, 3);
+	if (!recent.length) return end(s.none);
+	const lines = recent.map((t) => `${t.id} ${s.status[t.status]}\n${t.recipient.name}: ${money(t.quote.receiveAmount)} ${t.quote.receiveCurrency}`);
+	return end([s.mine, ...lines].join("\n"));
+}
+var schema$1 = objectType({
+	sessionId: stringType().min(1).max(100),
+	phoneNumber: stringType().min(6).max(20),
+	text: stringType().max(500).default("")
+});
+var Route$4 = createFileRoute("/api/ussd")({ server: { handlers: { POST: async ({ request }) => {
+	const body = request.headers.get("content-type")?.includes("application/json") ? await request.json().catch(() => null) : Object.fromEntries(await request.formData().catch(() => new FormData()));
+	const parsed = schema$1.safeParse(body);
+	if (!parsed.success) return Response.json({ error: "invalid_input" }, { status: 400 });
+	return new Response(handleUssd(parsed.data), { headers: { "Content-Type": "text/plain; charset=utf-8" } });
+} } } });
+var $$splitComponentImporter = () => import("./track.index-C49vHM19.mjs");
+var Route$3 = createFileRoute("/track/")({
+	head: () => ({ meta: [
+		{ title: "Track a transfer — Senda" },
+		{
+			name: "description",
+			content: "Follow your money from sent to collected."
+		},
+		{
+			property: "og:title",
+			content: "Track a transfer — Senda"
+		},
+		{
+			property: "og:description",
+			content: "Enter your SND transfer ID to see its status."
+		}
+	] }),
+	component: lazyRouteComponent($$splitComponentImporter, "component")
+});
+var Route$2 = createFileRoute("/api/exchange-rates/$currency")({ server: { handlers: { GET: async ({ params, request }) => {
+	const rate = getRate(params.currency);
+	if (!rate) return Response.json({ error: "unsupported_currency" }, { status: 404 });
+	const amountParam = new URL(request.url).searchParams.get("amount");
+	const amount = amountParam ? Number(amountParam) : NaN;
+	const quote = Number.isFinite(amount) ? buildQuote(amount, params.currency) : null;
+	return Response.json({
+		base: "ZAR",
+		currency: params.currency.toUpperCase(),
+		rate,
+		limits: {
+			min: 50,
+			max: MAX_AMOUNT
+		},
+		quote,
+		feeFor: Number.isFinite(amount) ? calculateFee(amount) : null
+	});
+} } } });
+var Route$1 = createFileRoute("/api/transfers/$id")({ server: { handlers: { GET: async ({ params }) => {
+	const t = getTransfer(params.id);
+	if (!t) return Response.json({ error: "not_found" }, { status: 404 });
+	return Response.json({ transfer: t });
+} } } });
+var schema = objectType({ status: enumType(STATUS_FLOW) });
+var Route = createFileRoute("/api/transfers/$id/status")({ server: { handlers: { PUT: async ({ params, request }) => {
+	const parsed = schema.safeParse(await request.json().catch(() => null));
+	if (!parsed.success) return Response.json({ error: "invalid_input" }, { status: 400 });
+	const result = updateStatus(params.id, parsed.data.status);
+	if ("error" in result) return Response.json(result, { status: result.error === "not_found" ? 404 : 409 });
+	return Response.json({ transfer: result });
+} } } });
+var IndexRoute = Route$12.update({
+	id: "/",
+	path: "/",
+	getParentRoute: () => Route$13
+});
+var AmountRoute = Route$11.update({
+	id: "/amount",
+	path: "/amount",
+	getParentRoute: () => Route$13
+});
+var RecipientRoute = Route$10.update({
+	id: "/recipient",
+	path: "/recipient",
+	getParentRoute: () => Route$13
+});
+var ReviewRoute = Route$9.update({
+	id: "/review",
+	path: "/review",
+	getParentRoute: () => Route$13
+});
+var SendRoute = Route$8.update({
+	id: "/send",
+	path: "/send",
+	getParentRoute: () => Route$13
+});
+var UssdRoute = Route$7.update({
+	id: "/ussd",
+	path: "/ussd",
+	getParentRoute: () => Route$13
+});
+var ApiCountriesRoute = Route$6.update({
+	id: "/api/countries",
+	path: "/api/countries",
+	getParentRoute: () => Route$13
+});
+var ApiTransfersRoute = Route$5.update({
+	id: "/api/transfers",
+	path: "/api/transfers",
+	getParentRoute: () => Route$13
+});
+var ApiUssdRoute = Route$4.update({
+	id: "/api/ussd",
+	path: "/api/ussd",
+	getParentRoute: () => Route$13
+});
+var SuccessIdRoute = Route$14.update({
+	id: "/success/$id",
+	path: "/success/$id",
+	getParentRoute: () => Route$13
+});
+var TrackIndexRoute = Route$3.update({
+	id: "/track/",
+	path: "/track/",
+	getParentRoute: () => Route$13
+});
+var TrackIdRoute = Route$15.update({
+	id: "/track/$id",
+	path: "/track/$id",
+	getParentRoute: () => Route$13
+});
+var ApiExchangeRatesCurrencyRoute = Route$2.update({
+	id: "/api/exchange-rates/$currency",
+	path: "/api/exchange-rates/$currency",
+	getParentRoute: () => Route$13
+});
+var ApiTransfersIdRoute = Route$1.update({
+	id: "/$id",
+	path: "/$id",
+	getParentRoute: () => ApiTransfersRoute
+});
+var ApiTransfersIdRouteChildren = { ApiTransfersIdStatusRoute: Route.update({
+	id: "/status",
+	path: "/status",
+	getParentRoute: () => ApiTransfersIdRoute
+}) };
+var ApiTransfersRouteChildren = { ApiTransfersIdRoute: ApiTransfersIdRoute._addFileChildren(ApiTransfersIdRouteChildren) };
+var rootRouteChildren = {
+	IndexRoute,
+	AmountRoute,
+	RecipientRoute,
+	ReviewRoute,
+	SendRoute,
+	UssdRoute,
+	ApiCountriesRoute,
+	ApiTransfersRoute: ApiTransfersRoute._addFileChildren(ApiTransfersRouteChildren),
+	ApiUssdRoute,
+	SuccessIdRoute,
+	TrackIdRoute,
+	TrackIndexRoute,
+	ApiExchangeRatesCurrencyRoute
+};
+var routeTree = Route$13._addFileChildren(rootRouteChildren)._addFileTypes();
+var getRouter = () => {
+	const queryClient = new QueryClient();
+	return createRouter({
+		routeTree,
+		context: { queryClient },
+		scrollRestoration: true,
+		defaultPreloadStaleTime: 0
+	});
+};
+//#endregion
+export { getRouter };
