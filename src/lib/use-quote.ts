@@ -19,6 +19,8 @@ export function useQuote() {
     queryFn: () => api.rate(dest!.currencyCode, amount || undefined),
     enabled: !!dest,
     placeholderData: keepPreviousData,
+    // The mock rate moves every few minutes; keep the screen honest.
+    refetchInterval: 60_000,
   });
   return { dest, countries: countries.data, ...q, amount };
 }

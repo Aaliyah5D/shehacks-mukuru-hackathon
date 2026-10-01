@@ -32,13 +32,25 @@ function SendPage() {
       {isError && (
         <div className="space-y-3">
           <ErrorMessage>{t("errApi")}</ErrorMessage>
-          <Button variant="secondary" onClick={() => refetch()}>↻</Button>
+          <Button variant="secondary" onClick={() => refetch()}>
+            ↻
+          </Button>
         </div>
       )}
       {data && (
         <>
-          <CountrySelector label={t("sendingFrom")} countries={origins} value={draft.fromCode} onChange={(c) => update({ fromCode: c })} />
-          <CountrySelector label={t("sendingTo")} countries={dests} value={draft.toCode} onChange={(c) => update({ toCode: c })} />
+          <CountrySelector
+            label={t("sendingFrom")}
+            countries={origins}
+            value={draft.fromCode}
+            onChange={(c) => update({ fromCode: c })}
+          />
+          <CountrySelector
+            label={t("sendingTo")}
+            countries={dests}
+            value={draft.toCode}
+            onChange={(c) => update({ toCode: c })}
+          />
           <div className="sticky bottom-4">
             <Button onClick={() => nav({ to: "/amount" })} disabled={!draft.toCode}>
               {t("continue")} →

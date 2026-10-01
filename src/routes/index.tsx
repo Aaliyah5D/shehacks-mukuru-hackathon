@@ -1,12 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useI18n } from "@/lib/i18n";
 import { buttonClass, Card } from "@/components/senda/ui";
+import { USSD_SERVICE_CODE } from "@/lib/api";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Senda — Send money home. Simply." },
-      { name: "description", content: "Know exactly what you pay and exactly what your family receives." },
+      {
+        name: "description",
+        content: "Know exactly what you pay and exactly what your family receives.",
+      },
       { property: "og:title", content: "Senda — Send money home. Simply." },
       { property: "og:description", content: "Clear fees. Simple transfers. Peace of mind." },
     ],
@@ -19,7 +23,9 @@ function Home() {
   return (
     <div className="flex flex-col gap-8 pt-6">
       <section className="space-y-4">
-        <p className="inline-block rounded-full bg-accent-soft px-3 py-1 text-sm font-semibold">🇿🇦 → 🇿🇼 🇲🇿 🇱🇸 🇸🇿 🇧🇼 🇿🇲 🇲🇼 🇬🇭 🇳🇬</p>
+        <p className="inline-block rounded-full bg-accent-soft px-3 py-1 text-sm font-semibold">
+          🇿🇦 → 🇿🇼 🇲🇿 🇱🇸 🇸🇿 🇧🇼 🇿🇲 🇲🇼 🇬🇭 🇳🇬
+        </p>
         <h1 className="text-5xl font-extrabold leading-[1.02] tracking-tight">{t("tagline")}</h1>
         <p className="text-lg text-muted-foreground">{t("homeLead")}</p>
       </section>
@@ -31,14 +37,23 @@ function Home() {
         <Link to="/track" className={buttonClass("secondary")}>
           {t("trackTransfer")}
         </Link>
+        <Link to="/ussd" className={buttonClass("ghost")}>
+          📱 {t("tryUssd", { code: USSD_SERVICE_CODE })}
+        </Link>
       </div>
 
       <section aria-labelledby="recent">
-        <h2 id="recent" className="mb-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+        <h2
+          id="recent"
+          className="mb-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground"
+        >
           {t("recent")}
         </h2>
         <Card className="flex items-center gap-4">
-          <span className="grid h-12 w-12 place-items-center rounded-full bg-secondary text-2xl" aria-hidden>
+          <span
+            className="grid h-12 w-12 place-items-center rounded-full bg-secondary text-2xl"
+            aria-hidden
+          >
             🇿🇼
           </span>
           <div className="flex-1">

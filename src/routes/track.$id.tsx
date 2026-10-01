@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api, ApiError, countriesQuery, fmt, STATUS_FLOW } from "@/lib/api";
 import { useI18n } from "@/lib/i18n";
 import { Button, Card, ErrorMessage, Screen } from "@/components/senda/ui";
-import { StatusTracker } from "@/components/senda/money";
+import { RecipientMessages, StatusTracker } from "@/components/senda/money";
 
 export const Route = createFileRoute("/track/$id")({
   head: ({ params }) => ({
@@ -23,7 +23,11 @@ function TrackPage() {
   const { t } = useI18n();
   const qc = useQueryClient();
   const { data: countries } = useQuery(countriesQuery);
-  const { data: tr, error, isLoading } = useQuery({
+  const {
+    data: tr,
+    error,
+    isLoading,
+  } = useQuery({
     queryKey: ["transfer", id],
     queryFn: () => api.getTransfer(id),
     retry: false,
@@ -38,7 +42,11 @@ function TrackPage() {
   return (
     <Screen title={t("trackTitle")} back="/track">
       {isLoading && <p>{t("loading")}</p>}
-      {error && <ErrorMessage>{error instanceof ApiError && error.status === 404 ? t("errNotFound") : t("errApi")}</ErrorMessage>}
+      {error && (
+        <ErrorMessage>
+          {error instanceof ApiError && error.status === 404 ? t("errNotFound") : t("errApi")}
+        </ErrorMessage>
+      )}
       {tr && (
         <>
           <Card className="space-y-3">
@@ -69,11 +77,16 @@ function TrackPage() {
           <Card>
             <StatusTracker status={tr.status} />
           </Card>
+          <RecipientMessages transfer={tr} />
           {next && (
             <div className="space-y-2 rounded-2xl border-2 border-dashed border-input p-4">
               <p className="text-sm text-muted-foreground">{t("demoOnly")}</p>
               {advance.isError && <ErrorMessage>{t("errApi")}</ErrorMessage>}
-              <Button variant="secondary" disabled={advance.isPending} onClick={() => advance.mutate()}>
+              <Button
+                variant="secondary"
+                disabled={advance.isPending}
+                onClick={() => advance.mutate()}
+              >
                 {t("advance")} →
               </Button>
             </div>

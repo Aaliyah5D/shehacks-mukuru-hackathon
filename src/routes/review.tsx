@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMutation } from "@tanstack/react-query";
-import { api } from "@/lib/api";
+import { api, ApiError } from "@/lib/api";
 import { useFlow } from "@/lib/flow";
 import { useI18n } from "@/lib/i18n";
 import { useQuote } from "@/lib/use-quote";
@@ -23,17 +23,23 @@ function ReviewPage() {
   const { t } = useI18n();
   const { draft } = useFlow();
   const nav = useNavigate();
-  const { dest, countries, data } = useQuote();
+  const { dest, countries, data, refetch } = useQuote();
   const origin = countries?.find((c) => c.code === draft.fromCode);
   const m = useMutation({
-    mutationFn: () =>
+    // Send the exact quote on screen; its rate window locks in the rate shown.
+    mutationFn: ({ amount, rateWindow }: { amount: number; rateWindow: number }) =>
       api.createTransfer({
-        amount: Number(draft.amount),
+        amount,
+        rateWindow,
         sender: { ...draft.sender, countryCode: draft.fromCode },
         recipient: { ...draft.recipient, countryCode: draft.toCode },
       }),
     onSuccess: (tr) => nav({ to: "/success/$id", params: { id: tr.id } }),
+    onError: (e) => {
+      if (e instanceof ApiError && e.code === "quote_expired") refetch();
+    },
   });
+  const expired = m.error instanceof ApiError && m.error.code === "quote_expired";
 
   return (
     <Screen title={t("reviewTitle")} step={4} back="/recipient">
@@ -55,9 +61,13 @@ function ReviewPage() {
           <p className="text-sm text-muted-foreground">{draft.recipient.phone}</p>
         </div>
       </Card>
-      {m.isError && <ErrorMessage>{t("errApi")}</ErrorMessage>}
+      {m.isError && <ErrorMessage>{expired ? t("errQuoteExpired") : t("errApi")}</ErrorMessage>}
       <div className="space-y-3">
-        <Button variant="accent" disabled={m.isPending || !data?.quote} onClick={() => m.mutate()}>
+        <Button
+          variant="accent"
+          disabled={m.isPending || !data?.quote}
+          onClick={() => data?.quote && m.mutate(data.quote)}
+        >
           {m.isPending ? t("sending") : `${t("confirmSend")} ✓`}
         </Button>
         <Link to="/amount" className={buttonClass("secondary")}>

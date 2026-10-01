@@ -26,7 +26,8 @@ const sn: Partial<Record<keyof typeof en, string>> = {
   totalCost: "Mutengo wese",
   noHidden: "Hapana mari yakavigwa.",
   limits: "Tumira pakati peR{min} neR{max}.",
-  mockRate: "Mwero wemuenzaniso — haisi mutengo chaiwo.",
+  mockRate: "Mwero wemuenzaniso — unochinja maminitsi mashoma oga oga, haisi mutengo chaiwo.",
+  rateHeld: "Mwero uyu wakuchengeterwa kusvika {time}.",
   whoTitle: "Uri kutumira kuna ani?",
   recipientName: "Zita remugamuchiri",
   fullName: "Zita rizere",
@@ -74,6 +75,24 @@ const sn: Partial<Record<keyof typeof en, string>> = {
   errNotFound: "Hatina kuwana mari iyi. Tarisa nhamba wozoedza zvakare.",
   errPhone: "Ndapota isa nhamba yerunhare chaiyo.",
   loading: "Kumirira…",
+  errQuoteExpired: "Mwero wekuchinja mari wachinja. Tarisa mari itsva, wozobvuma zvakare.",
+  smsTitle: "Mameseji akatumirwa kumugamuchiri",
+  smsTo: "SMS ku {to}",
+  sms_SENT:
+    "Senda: {sender} akutumira {amount} {cur}. Nhamba {id}. Tichakutumira SMS kana yagadzirira kutorwa.",
+  sms_READY_TO_COLLECT:
+    "Senda: {name}, mari yako {amount} {cur} yagadzirira kutorwa. Uya neID nenhamba {id} kunzvimbo ipi neipi yeSenda.",
+  tryUssd: "Hauna smartphone kana data? Ridza {code}",
+  ussdTitle: "Tumira neUSSD",
+  ussdLead: "Inoshanda parunhare chero rupi, pasina data.",
+  ussdPhone: "Nhamba yerunhare yaunotumira nayo",
+  ussdHint: "Ridza {code}, wobva wadzvanya Ridza.",
+  ussdRunning: "Kodhi yeUSSD iri kushanda…",
+  ussdInvalid: "Dambudziko rekubatana kana kodhi isiri iyo.",
+  ussdReply: "Pindura",
+  ussdCall: "Ridza",
+  ussdSend: "Tumira",
+  ussdCancel: "Kanzura",
 };
 
 export default sn;

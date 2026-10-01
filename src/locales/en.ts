@@ -23,7 +23,8 @@ const en = {
   totalCost: "Total cost",
   noHidden: "No hidden fees.",
   limits: "Send between R{min} and R{max}.",
-  mockRate: "Demo rate — not a live price.",
+  mockRate: "Demo rate — it moves every few minutes, not a live price.",
+  rateHeld: "This rate is held for you until {time}.",
   whoTitle: "Who are you sending to?",
   recipientName: "Recipient name",
   fullName: "Full name",
@@ -71,6 +72,27 @@ const en = {
   errNotFound: "We couldn't find that transfer. Check the ID and try again.",
   errPhone: "Please enter a valid phone number.",
   loading: "Loading…",
+  errQuoteExpired: "The exchange rate just changed. Check the new amount, then confirm again.",
+  smsTitle: "Messages sent to recipient",
+  smsTo: "SMS to {to}",
+  sms_SENT:
+    "Senda: {sender} sent you {amount} {cur}. Ref {id}. We'll SMS you when it's ready to collect.",
+  sms_READY_TO_COLLECT:
+    "Senda: {name}, your {amount} {cur} is ready to collect. Bring your ID and ref {id} to any Senda pay-out point.",
+  tryUssd: "No smartphone or data? Dial {code}",
+  ussdTitle: "Send with USSD",
+  ussdLead:
+    "Works on any phone, with no data. This simulator talks to the same backend as the app.",
+  ussdPhone: "Sending from phone number",
+  ussdHint: "Dial {code}, then press Call.",
+  ussdRunning: "USSD code running…",
+  ussdInvalid: "Connection problem or invalid MMI code.",
+  ussdReply: "Reply",
+  ussdCall: "Call",
+  ussdSend: "Send",
+  ussdCancel: "Cancel",
+  ussdClose: "OK",
+  ussdDelete: "Delete",
 } as const;
 
 export default en;

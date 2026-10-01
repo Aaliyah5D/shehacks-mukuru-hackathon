@@ -4,6 +4,7 @@ import { createTransfer } from "@/lib/senda.server";
 
 const schema = z.object({
   amount: z.number().positive(),
+  rateWindow: z.number().int().optional(),
   sender: z.object({
     name: z.string().trim().min(1).max(100),
     city: z.string().trim().min(1).max(100),
@@ -24,7 +25,8 @@ export const Route = createFileRoute("/api/transfers")({
         const parsed = schema.safeParse(await request.json().catch(() => null));
         if (!parsed.success) return Response.json({ error: "invalid_input" }, { status: 400 });
         const result = createTransfer(parsed.data);
-        if ("error" in result) return Response.json(result, { status: 400 });
+        if ("error" in result)
+          return Response.json(result, { status: result.error === "quote_expired" ? 409 : 400 });
         return Response.json({ transfer: result }, { status: 201 });
       },
     },

@@ -22,11 +22,17 @@ function SuccessPage() {
   const { id } = Route.useParams();
   const { t } = useI18n();
   const { reset } = useFlow();
-  const { data: tr, isError } = useQuery({ queryKey: ["transfer", id], queryFn: () => api.getTransfer(id) });
+  const { data: tr, isError } = useQuery({
+    queryKey: ["transfer", id],
+    queryFn: () => api.getTransfer(id),
+  });
 
   return (
     <div className="space-y-6 pt-6 text-center">
-      <div className="mx-auto grid h-20 w-20 place-items-center rounded-full bg-success text-4xl text-success-foreground" aria-hidden>
+      <div
+        className="mx-auto grid h-20 w-20 place-items-center rounded-full bg-success text-4xl text-success-foreground"
+        aria-hidden
+      >
         ✓
       </div>
       <div>
