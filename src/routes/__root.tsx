@@ -19,14 +19,29 @@ import { LanguageSelector, Logo } from "@/components/senda/ui";
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">This page doesn't exist.</p>
+      <div className="w-full max-w-md text-center">
+        <div className="mb-6 flex justify-center">
+          <div className="grid h-16 w-16 place-items-center rounded-2xl bg-primary text-3xl font-extrabold text-primary-foreground shadow-md">
+            ➜
+          </div>
+        </div>
+
+        <h1 className="text-7xl font-extrabold tracking-tight text-foreground">
+          404
+        </h1>
+
+        <h2 className="mt-4 text-xl font-extrabold text-foreground">
+          Page not found
+        </h2>
+
+        <p className="mt-2 text-sm leading-6 text-muted-foreground">
+          The page you're looking for doesn't exist.
+        </p>
+
         <div className="mt-6">
           <Link
             to="/"
-            className="inline-flex min-h-12 items-center rounded-2xl bg-primary px-6 font-semibold text-primary-foreground"
+            className="inline-flex min-h-14 w-full items-center justify-center rounded-2xl bg-primary px-6 text-lg font-bold text-primary-foreground shadow-md transition-all hover:bg-primary/90 active:scale-[0.98]"
           >
             Go home
           </Link>
@@ -38,75 +53,140 @@ function NotFoundComponent() {
 
 function ErrorComponent({ error, reset }: ErrorComponentProps) {
   console.error(error);
+
   const router = useRouter();
+
   useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
+    reportLovableError(error, {
+      boundary: "tanstack_root_error_component",
+    });
   }, [error]);
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold text-foreground">
-          Something went wrong. Please try again.
+      <div className="w-full max-w-md text-center">
+
+        <div className="mb-6 flex justify-center">
+          <div className="grid h-16 w-16 place-items-center rounded-2xl bg-accent-soft text-2xl">
+            ⚠
+          </div>
+        </div>
+
+        <h1 className="text-xl font-extrabold text-foreground">
+          Something went wrong
         </h1>
-        <div className="mt-6 flex justify-center gap-2">
+
+        <p className="mt-2 text-sm leading-6 text-muted-foreground">
+          Please try again or return to the home screen.
+        </p>
+
+        <div className="mt-6 flex flex-col gap-3">
+
           <button
             onClick={() => {
               router.invalidate();
               reset();
             }}
-            className="min-h-12 rounded-2xl bg-primary px-6 font-semibold text-primary-foreground"
+            className="inline-flex min-h-14 w-full items-center justify-center rounded-2xl bg-primary px-6 text-lg font-bold text-primary-foreground shadow-md transition-all hover:bg-primary/90 active:scale-[0.98]"
           >
             Try again
           </button>
-          <a
-            href="/"
-            className="inline-flex min-h-12 items-center rounded-2xl border-2 border-primary px-6 font-semibold"
+
+          <Link
+            to="/"
+            className="inline-flex min-h-14 w-full items-center justify-center rounded-2xl border-2 border-primary bg-card px-6 text-lg font-bold text-primary transition-all hover:bg-secondary active:scale-[0.98]"
           >
             Go home
-          </a>
+          </Link>
+
         </div>
       </div>
     </div>
   );
 }
 
-export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+export const Route = createRootRouteWithContext<{
+  queryClient: QueryClient;
+}>()({
   head: () => ({
     meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { name: "theme-color", content: "#FFF9F5" },
-      { title: "Senda — Send money home. Simply." },
+      {
+        charSet: "utf-8",
+      },
+      {
+        name: "viewport",
+        content:
+          "width=device-width, initial-scale=1, maximum-scale=1",
+      },
+      {
+        name: "theme-color",
+        content: "#F59E0B",
+      },
+      {
+        title: "Senda — Send money home. Simply.",
+      },
       {
         name: "description",
-        content: "Clear fees, simple transfers from South Africa to family across Africa.",
+        content:
+          "Clear fees, simple transfers from South Africa to family across Africa.",
       },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
+      {
+        property: "og:type",
+        content: "website",
+      },
+      {
+        name: "twitter:card",
+        content: "summary_large_image",
+      },
     ],
+
     links: [
-      { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap",
+        href: appCss,
+      },
+      {
+        rel: "icon",
+        href: "/favicon.ico",
+        type: "image/x-icon",
+      },
+      {
+        rel: "preconnect",
+        href: "https://fonts.googleapis.com",
+      },
+      {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossOrigin: "anonymous",
+      },
+      {
+        rel: "stylesheet",
+        href:
+          "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap",
       },
     ],
   }),
+
   shellComponent: RootShell,
+
   component: RootComponent,
+
   notFoundComponent: NotFoundComponent,
+
   errorComponent: ErrorComponent,
 });
 
-function RootShell({ children }: { children: ReactNode }) {
+function RootShell({
+  children,
+}: {
+  children: ReactNode;
+}) {
   return (
     <html lang="en">
       <head>
         <HeadContent />
       </head>
+
       <body>
         {children}
         <Scripts />
@@ -117,19 +197,42 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
   return (
     <QueryClientProvider client={queryClient}>
       <I18nProvider>
         <FlowProvider>
-          <div className="mx-auto flex min-h-screen w-full max-w-lg flex-col px-5 pb-10">
-            <header className="flex items-center justify-between py-4">
-              <Logo />
-              <LanguageSelector />
-            </header>
-            <main className="flex-1">
-              <Outlet />
-            </main>
+
+          {/* Full application background */}
+          <div className="min-h-screen bg-background">
+
+            {/* Mobile-first application container */}
+            <div className="mx-auto flex min-h-screen w-full max-w-md flex-col px-4 pb-8 sm:px-5">
+
+              {/* Global application header */}
+              <header className="flex items-center justify-between py-4">
+
+                <Logo />
+
+                <LanguageSelector />
+
+              </header>
+
+              {/* Page content */}
+              <main className="flex-1">
+                <Outlet />
+              </main>
+
+              {/* Application footer */}
+              <footer className="pt-8 pb-2 text-center">
+                <p className="text-xs font-medium text-muted-foreground">
+                  Send money home. Simply.
+                </p>
+              </footer>
+
+            </div>
           </div>
+
         </FlowProvider>
       </I18nProvider>
     </QueryClientProvider>
